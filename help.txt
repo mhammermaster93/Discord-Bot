@@ -1,0 +1,7 @@
+Commands:
+$quote: Will give you a random quote from a patristic church father
+$pearl: will give you a random image from a patristic church father
+$roll: rolls a dice
+$coin: flip a coin
+$bible: opens the bible section
+$video: will drop a random youtube video from various orthodox youtube channels
