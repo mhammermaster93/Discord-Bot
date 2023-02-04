@@ -1,6 +1,6 @@
 import random
 import discord
-import os
+from discord.ext import tasks, commands
 from images import video_links, coin_flip, get_random_image
 from help import get_quote, write_help
 from Announcements import announce_vid
@@ -11,7 +11,6 @@ load_dotenv()
 try:
     intents = discord.Intents.all()
     intents.messages = True
-    my_secret = os.getenv('TOKEN')
     client = discord.Client(intents=intents)
 
     #registering an event
@@ -19,6 +18,17 @@ try:
     #called when the bot is ready to be used
     async def on_ready():
         print('We have logged in as {0.user}'.format(client))
+
+        update_new_video.start()
+    
+    @tasks.loop(seconds=5)
+    async def update_new_video():
+        video = await announce_vid()
+        if video != 'None':
+            channel = client.get_channel(1070887941406195753)
+            await channel.send(video)
+            
+
 
     @client.event
     async def on_message(message):
@@ -28,6 +38,9 @@ try:
         if message.content.startswith('$roll'):
             #send message to channel
             await message.channel.send(f'{str(random.randint(1,6))}')
+        if message.content.startswith('$ping'):
+            #send message to channel
+            await message.channel.send(f'{round(client.latency * 1000)}ms')
         if message.content.startswith('$flip'):
             #send message to channel
             flip = coin_flip()
@@ -48,8 +61,10 @@ try:
         if message.content.startswith('$test'):
             channel = client.get_channel(1070887941406195753)
             video = await announce_vid()
-            await message.channel.send(video)
-    client.run(my_secret)
+            await channel.send(video)
+    client.run('MTA2OTg1MjM2NDEzNzMxMjI3Ng.G8CenQ.LBcQ_IDvNKEXKnwqKRP4eO1L3rEfDtJGajO83g')
 except Exception as e:
     print(e)
 
+#new token
+#

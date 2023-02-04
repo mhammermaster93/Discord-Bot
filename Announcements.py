@@ -30,9 +30,8 @@ async def announce_vid():
     for video in tuple(videos):
         urls.append(video['navigationEndpoint']['commandMetadata']
                     ['webCommandMetadata']['url'])
-    print(urls)
-
-    with open('./previous.txt/', 'r') as f:
+                    
+    with open('previous.txt', 'r') as f:
         f = f.read()
 
     #need to figure out how to grab JUST the url
@@ -41,8 +40,9 @@ async def announce_vid():
     #print(url)
 
     if urls[0] != f:
+        with open('previous.txt', 'w') as f:
+            f.write(urls[0])
         return 'https://youtube.com' + urls[0]
     else:
-        with open('./previous.txt/', 'w') as f:
-            f.write(urls[0])
-        return "no new videos"
+        print("no new videos")
+        return 'None' #don't return anything. I don't want it to
