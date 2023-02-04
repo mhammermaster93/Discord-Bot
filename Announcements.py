@@ -1,71 +1,48 @@
 import os
 import discord
-# import googleapiclient.discovery
+import scrapetube
+import json
 
 
-# my_secret = os.environ['youtube_api']
+# def video_links():
+#   channels = ['UChozbOPP6uOJ2UkiTZy-sgQ','UCkpBmkoZ6yToHhB8uFDp46Q','UCEPeyXOw5LA_DyTu2U4-4Gg','UCCdAuHh5MlTXQPxts1W9ICw',''
+#              ]
 
-# service = googleapiclient.discovery.build("youtube", "v3", developerKey=my_secret)
+#   videos = scrapetube.get_channel(f'{random.choice(channels)}',limit = 20, sort_by = 'popular')
 
-# #API key added
-# # api = os.environ.get(my_secret)
-# api = os.environ.get('youtube_api')
+#   urls = []
 
-# print(api)
-# channel_id = "UCEPeyXOw5LA_DyTu2U4-4Gg"
+#   for video in videos:
+#    urls.append('https://youtube.com' + video['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url'])
 
-# response = service.channels().list(
-#     part="contentDetails",
-#     id=channel_id
-# ).execute()
+#   randon_url = random.choice(urls)
 
-# uploads_playlist_id = response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+#   return randon_url
 
-# response = service.playlistItems().list(
-#     part="snippet",
-#     maxResults=200,
-#     playlistId=uploads_playlist_id
-# ).execute()
+# #print(video_links())
+async def announce_vid():
+    videos = scrapetube.get_channel(f'UCEPeyXOw5LA_DyTu2U4-4Gg',
+                                    limit=1,
+                                    sort_by='newest')
 
-# videos = []
-# for item in response["items"]:
-#     video_id = item["snippet"]["resourceId"]["videoId"]
-#     title = item["snippet"]["title"]
-#     published_at = item["snippet"]["publishedAt"]
-#     videos.append({"video_id": video_id, "title": title, "published_at": published_at})
+    urls = []
 
-# print("this is a video " + item['title'])
-import os
-import discord
-from googleapiclient.discovery import build
+    for video in tuple(videos):
+        urls.append(video['navigationEndpoint']['commandMetadata']
+                    ['webCommandMetadata']['url'])
+    print(urls)
 
+    with open('previous.txt', 'r') as f:
+        f = f.read()
 
-#API key added
-api = 'AIzaSyD-oubfkByi32q3KXwkxUwN5xgeb8Ae25Q'
+    #need to figure out how to grab JUST the url
+    #use url JSON pathing
 
+    #print(url)
 
-youtube = build("youtube", "v3", developerKey=api)
-
-channel_id = "UCEPeyXOw5LA_DyTu2U4-4Gg"
-
-response = youtube.channels().list(
-    part="contentDetails",
-    id=channel_id
-).execute()
-
-uploads_playlist_id = response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
-
-response = youtube.playlistItems().list(
-    part="snippet",
-    maxResults=200,
-    playlistId=uploads_playlist_id
-).execute()
-
-videos = []
-for item in response["items"]:
-    video_id = item["snippet"]["resourceId"]["videoId"]
-    title = item["snippet"]["title"]
-    published_at = item["snippet"]["publishedAt"]
-    videos.append({"video_id": video_id, "title": title, "published_at": published_at})
-
-    print("this is a video " + item['snippet']['title'])
+    if urls[0] != f:
+        return 'https://youtube.com' + urls[0]
+    else:
+        with open('previous.txt', 'w') as f:
+            f.write(urls[0])
+        return "no new videos"
