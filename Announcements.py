@@ -32,7 +32,7 @@ async def announce_vid():
                     ['webCommandMetadata']['url'])
     print(urls)
 
-    with open('previous.txt', 'r') as f:
+    with open('./previous.txt/', 'r') as f:
         f = f.read()
 
     #need to figure out how to grab JUST the url
@@ -43,6 +43,6 @@ async def announce_vid():
     if urls[0] != f:
         return 'https://youtube.com' + urls[0]
     else:
-        with open('previous.txt', 'w') as f:
+        with open('./previous.txt/', 'w') as f:
             f.write(urls[0])
         return "no new videos"

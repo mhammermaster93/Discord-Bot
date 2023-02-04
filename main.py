@@ -4,11 +4,14 @@ import os
 from images import video_links, coin_flip, get_random_image
 from help import get_quote, write_help
 from Announcements import announce_vid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 try:
     intents = discord.Intents.all()
     intents.messages = True
-    my_secret = os.environ['TOKEN']
+    my_secret = os.getenv('TOKEN')
     client = discord.Client(intents=intents)
 
     #registering an event
@@ -46,7 +49,7 @@ try:
             channel = client.get_channel(1070887941406195753)
             video = await announce_vid()
             await message.channel.send(video)
+    client.run(my_secret)
 except Exception as e:
     print(e)
 
-client.run(my_secret)
