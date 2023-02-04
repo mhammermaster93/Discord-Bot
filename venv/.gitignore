@@ -1,1 +1,1 @@
-git rm --cached .gitignore/.env
+git rm --cached .env
