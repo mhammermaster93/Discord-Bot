@@ -1,10 +1,13 @@
 import random
 import discord
+from urllib.request import *
+from urllib.error import *
 from discord.ext import tasks, commands
 from images import video_links, coin_flip, get_random_image
 from help import get_quote, write_help
 from Announcements import announce_vid
 from dotenv import load_dotenv
+from quotes import *
 
 load_dotenv()
 
@@ -50,7 +53,7 @@ try:
             image = get_random_image()
             await message.channel.send(file=discord.File(image))
         if message.content.startswith('$quote'):
-            quote = get_quote()
+            quote = grab_quote()
             await message.channel.send(quote)
         if message.content.startswith('$video'):
             video = video_links()
@@ -62,9 +65,8 @@ try:
             channel = client.get_channel(1070887941406195753)
             video = await announce_vid()
             await channel.send(video)
-    client.run('MTA2OTg1MjM2NDEzNzMxMjI3Ng.G8CenQ.LBcQ_IDvNKEXKnwqKRP4eO1L3rEfDtJGajO83g')
+    client.run()
 except Exception as e:
     print(e)
 
-#new token
-#
+#Joshua add token back
