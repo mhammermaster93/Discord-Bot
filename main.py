@@ -65,7 +65,10 @@ try:
             channel = client.get_channel(1070887941406195753)
             video = await announce_vid()
             await channel.send(video)
-    client.run()
+        if message.content.startswith('$hello'):
+            statement = "I am a bot created by apostalyptic for the purposes of helping father Mikhail. I am a gift."
+            await message.channel.send(statement)
+    client.run(TOKEN)
 except Exception as e:
     print(e)
 

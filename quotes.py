@@ -16,25 +16,54 @@
 #         text = article.text.strip()
 #         return text
 
+
 import requests
 import random
 from bs4 import BeautifulSoup
+    
+# def grab_quote():
+#     quote_page = "https://orthodoxchurchquotes.wordpress.com/"
+#     page = requests.get(quote_page)
+#     soup = BeautifulSoup(page.text, 'html.parser')
+  
+#     content = soup.find_all('div', attrs={'class': 'entry-content'})
+  
+#     quotes = []
+#     for contents in content:
+#         text = contents.text.strip().split("Share this:")[0]
+#         author = contents.text.strip().split("+")[1].strip() if "+" in contents.text else ""
+#         quotes.append(text + " **" + author + "**")
+    
+#     return random.choice(quotes)
 
+# quote = grab_quote()
+# print(quote)
+
+import requests
+import random
+from bs4 import BeautifulSoup
+    
 def grab_quote():
     quote_page = "https://orthodoxchurchquotes.wordpress.com/"
     page = requests.get(quote_page)
     soup = BeautifulSoup(page.text, 'html.parser')
-    articles = soup.find_all('article','entry tite', '_5pbx userContent')
+  
+    content = soup.find_all('div', attrs={'class': 'entry-content'})
+  
     quotes = []
-    for article in articles:
-        text = article.text.strip()
+    texts = []
+    for contents in content[-1:]:
+        text = contents.text.strip().split("Share this:",)[0]
+        author = contents.text.strip().split("+")[1].strip()
         quotes.append(text)
+        texts.append("**" + author + "**")
+    
     return random.choice(quotes)
+    print(quote)
 
 quote = grab_quote()
-print(quote)
-    
-    
-    
-    
+
+
+
+
     
