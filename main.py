@@ -1,5 +1,6 @@
 import random
 import discord
+import os
 from urllib.request import *
 from urllib.error import *
 from discord.ext import tasks, commands
@@ -10,6 +11,7 @@ from dotenv import load_dotenv
 from quotes import *
 
 load_dotenv()
+my_secret = os.getenv("TOKEN")
 
 try:
     intents = discord.Intents.all()
@@ -68,7 +70,7 @@ try:
         if message.content.startswith('$hello'):
             statement = "I am a bot created by apostalyptic for the purposes of helping father Mikhail. I am a gift."
             await message.channel.send(statement)
-    client.run(TOKEN)
+    client.run(my_secret)
 except Exception as e:
     print(e)
 
