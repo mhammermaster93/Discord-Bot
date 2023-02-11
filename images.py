@@ -2,13 +2,13 @@ import random
 import scrapetube
 
 def get_random_image():
-    return f'./pics/{random.randint(1,9)}.jpg'
+    return f'./pics/{random.randint(1,11)}.jpg'
 
 def video_links():
   channels = ['UChozbOPP6uOJ2UkiTZy-sgQ','UCkpBmkoZ6yToHhB8uFDp46Q','UCEPeyXOw5LA_DyTu2U4-4Gg','UCCdAuHh5MlTXQPxts1W9ICw',''
              ]
  
-  videos = scrapetube.get_channel(f'{random.choice(channels)}',limit = 20, sort_by = 'popular')
+  videos = scrapetube.get_channel(f'{random.choice(channels)}',limit = 40, sort_by = 'popular')
 
   urls = []
 

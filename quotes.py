@@ -57,9 +57,8 @@ def grab_quote():
         author = contents.text.strip().split("+")[1].strip()
         quotes.append(text)
         texts.append("**" + author + "**")
-    
-    return random.choice(quotes)
-    print(quote)
+        return random.choice(quotes)
+        print(quote)
 
 quote = grab_quote()
 
